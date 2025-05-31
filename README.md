@@ -1,5 +1,7 @@
 # Task Manager with NedaraJS
 
+[Check out the demo app here 🔥](https://nedara-project.github.io/nedarajs-demo/)
+
 ## Overview
 
 This project is a demo application showcasing the capabilities of [NedaraJS](https://github.com/Nedara-Project/nedarajs), a lightweight JavaScript framework for component-based web development. The Task Manager demonstrates how to build a responsive, single-page application with NedaraJS, including features like:
