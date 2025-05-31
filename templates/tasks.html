@@ -1,0 +1,101 @@
+<!-- You could also split it into multiple templates instead of having one that covers everything (enough for this demo) -->
+<template id="task_app">
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-number">{{totalTasks}}</div>
+            <div class="stat-label">Total Tasks</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{completedTasks}}</div>
+            <div class="stat-label">Completed</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{pendingTasks}}</div>
+            <div class="stat-label">Pending</div>
+        </div>
+    </div>
+
+    <div class="task-form">
+        <h3>✨ New Task</h3>
+        <form class="new-task-form">
+            <div class="form-group">
+                <label for="task-title">Title *</label>
+                <input type="text" id="task-title" name="title" required placeholder="Enter task title">
+            </div>
+            <div class="form-group">
+                <label for="task-description">Description</label>
+                <textarea id="task-description" name="description" placeholder="Optional task description"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="task-priority">Priority</label>
+                    <select id="task-priority" name="priority">
+                        <option value="low">🟢 Low</option>
+                        <option value="medium" selected>🟡 Medium</option>
+                        <option value="high">🔴 High</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="task-due-date">Due Date</label>
+                    <input type="date" id="task-due-date" name="dueDate">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <span>🔨 Add Task</span>
+            </button>
+        </form>
+    </div>
+
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="pending">Pending</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
+        <button class="filter-btn" data-filter="high">High Priority</button>
+    </div>
+
+    <div class="task-list" id="task-list">
+        {{#tasks}}
+            <div class="task-item {{#if completed}}completed{{/if}}" data-task-id="{{id}}">
+                <div class="task-header">
+                    <div>
+                        <div class="task-title">{{title}}</div>
+                        {{#if description}}
+                            <div class="task-description">{{description}}</div>
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="task-meta">
+                    <span class="task-priority priority-{{priority}}">
+                        {{#if priorityHigh}}🔴 High{{/if}}
+                        {{#if priorityMedium}}🟡 Medium{{/if}}
+                        {{#if priorityLow}}🟢 Low{{/if}}
+                    </span>
+                    {{#if dueDate}}
+                        <span class="task-due-date">📅 Due: {{dueDate}}</span>
+                    {{/if}}
+                    <span class="task-due-date">📅 Created: {{createdAt}}</span>
+                </div>
+                <div class="task-actions">
+                    {{#if completed}}
+                        <button class="btn btn-success" data-js-function="_onUncompleteTask">
+                            <span>↩️ Reactivate</span>
+                        </button>
+                    {{else}}
+                        <button class="btn btn-success" data-js-function="_onCompleteTask">
+                            <span>✅ Complete</span>
+                        </button>
+                    {{/if}}
+                    <button class="btn btn-danger" data-js-function="_onDeleteTask">
+                        <span>🗑️ Delete</span>
+                    </button>
+                </div>
+            </div>
+        {{/tasks}}
+        {{#if empty}}
+            <div class="empty-state">
+                <h3>🎯 No tasks found</h3>
+                <p>Start by adding your first task above!</p>
+            </div>
+        {{/if}}
+    </div>
+</template>
